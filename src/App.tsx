@@ -4,6 +4,7 @@ import Canvas from "./components/Canvas";
 
 function App() {
 	const [nodes, setNodes] = useState([{ id: 1, x: 100, y: 100 }]);
+	const [connections, setConnections] = useState([{ from: 1, to: 2 }]);
 
 	const handleAddNode = () => {
 		const newId = nodes.length + 1;
@@ -19,7 +20,7 @@ function App() {
 	return (
 		<div className="flex">
 			<Sidebar onAdd={handleAddNode} />
-			<Canvas nodes={nodes} onDrag={handleDrag} />
+			<Canvas nodes={nodes} onDrag={handleDrag} connections={connections} />
 		</div>
 	);
 }
