@@ -7,10 +7,14 @@ function Canvas({
 	nodes,
 	connections,
 	onDrag,
+	onNodeClick,
+	selectedNodeId,
 }: {
 	nodes: Node[];
 	connections: Connections[];
 	onDrag: (id: number, x: number, y: number) => void;
+	onNodeClick: (id: number) => void;
+	selectedNodeId: number | null;
 }) {
 	const nodeRefs = useRef<Map<number, HTMLDivElement>>(new Map());
 	const canvasRefs = useRef<HTMLDivElement | null>(null);
@@ -101,11 +105,13 @@ function Canvas({
 				<div
 					key={node.id}
 					style={{ left: node.x, top: node.y }}
-					className="absolute card w-60 bg-base-100 shadow-xl rounded cursor-move"
+					className={`absolute card w-60 bg-base-100 shadow-xl rounded cursor-move
+					${selectedNodeId === node.id ? "border-4 border-blue-400" : "bg-base-100"}`}
 					onMouseDown={(e) => handleMouseDown(e, node.id)}
 					ref={(el) => {
 						if (el) nodeRefs.current.set(node.id, el);
 					}}
+					onClick={() => onNodeClick(node.id)}
 				>
 					<div className="card-body">
 						<h2 className="card-title">ノード: {node.id}</h2>
